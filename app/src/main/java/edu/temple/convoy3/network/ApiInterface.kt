@@ -1,6 +1,7 @@
 package edu.temple.convoy3.network
 
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Field
@@ -20,6 +21,9 @@ data class ConveyAPIParser(
     val status: String,
     val convoy_id: String?,
     val message: String?
+)
+data class fcmTokenParser(
+    val status: String
 )
 
 interface ApiInterface {
@@ -79,12 +83,21 @@ interface ApiInterface {
 
     @Multipart
     @POST("convoy.php")
-    fun uploadFile(
-        @Part("action") action: String = "MESSAGE",
-        @Part("username") username: String,
-        @Part("session_key") sessionKey: String,
-        @Part("convoy_id") convoyID: String,
-        @Part messageFile: MultipartBody.Part
-    ) : Call<ConveyAPIParser>
+    fun sendAudioMessage(
+        @Part("action") action: RequestBody,                //"MESSAGE"
+        @Part("username") username: RequestBody,
+        @Part("session_key") sessionKey: RequestBody,
+        @Part("convoy_id") convoyId: RequestBody,
+        @Part messageFile: MultipartBody.Part       //short recording from convoy member
+    ): Call<ConveyAPIParser>
+
+    @FormUrlEncoded
+    @POST("account.php")
+    fun updateFCM(
+        @Field("action") action: String,
+        @Field("username") username: String,
+        @Field("session_key") sessionKey: String,
+        @Field("fcm_token") fcmToken: String
+    ): Call<fcmTokenParser>
 
 }

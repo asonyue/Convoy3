@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -101,6 +102,95 @@ fun MyDialog(onDismissRequest: () -> Unit, callback: (String) -> Unit) {
                 Spacer(modifier = Modifier.padding(10.dp))
                 Button(onClick = { callback(text) }) {
                     Text("Submit")
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ConvoyDialog(onDismissRequest: () -> Unit,
+                 startConvoy: () -> Unit,
+                 joinConvoy: () -> Unit,
+                 endConvoy: () -> Unit,
+                 leaveConvoy: () -> Unit
+                 ) {
+
+    var tmp by remember { mutableStateOf(false) }
+
+
+    Dialog(onDismissRequest = onDismissRequest) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp)
+                .padding(5.dp),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Button(onClick = {
+                    startConvoy()
+
+                },modifier = Modifier.fillMaxWidth()) {
+                    Text(text="start")
+                }
+                Button(onClick = {
+                    joinConvoy()
+
+                },modifier = Modifier.fillMaxWidth()) {
+                    Text(text="join")
+                }
+                Button(onClick = {
+                    endConvoy()
+                    tmp = false
+                },modifier = Modifier.fillMaxWidth()) {
+                    Text(text = "end")
+                }
+                Button(onClick = {
+                    leaveConvoy()
+                    tmp = false
+                },modifier = Modifier.fillMaxWidth()) {
+                    Text(text = "leave")
+                }
+
+            }
+        }
+    }
+}
+
+@Composable
+fun RecordingDialog(onDismissRequest: () -> Unit,
+                    startRecording: () -> Unit,
+                    stopRecording: () -> Unit) {
+    Dialog(onDismissRequest = onDismissRequest) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .padding(5.dp),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Button(onClick = {
+                    startRecording()
+                },modifier = Modifier.fillMaxWidth()) {
+                    Text(text = "start record")
+                }
+                Button(onClick = {
+                    stopRecording()
+                },modifier = Modifier.fillMaxWidth()) {
+                    Text(text = "stop record")
                 }
             }
         }

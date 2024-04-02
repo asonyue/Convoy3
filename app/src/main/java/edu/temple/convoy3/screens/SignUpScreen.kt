@@ -70,6 +70,7 @@ fun SignUpScreen(navController: NavController) {
                         SharedPreferencesManager.saveSessionKey(context, it.session_key.toString())
                         SharedPreferencesManager.saveUsername(context, username)
                         navController.navigate(route=AllScreen.MainScreen.name)
+                        sendFCM(context)
                     }
                 }
             }

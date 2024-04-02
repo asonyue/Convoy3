@@ -1,7 +1,9 @@
 package edu.temple.convoy3
 
 import android.Manifest
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -17,11 +19,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
+import com.google.firebase.messaging.FirebaseMessaging
 import edu.temple.convoy3.components.Clickable_button
 import edu.temple.convoy3.components.MyDialog
 import edu.temple.convoy3.navigation.AllNavigation
 import edu.temple.convoy3.navigation.AllScreen
 import edu.temple.convoy3.ui.theme.Convoy3Theme
+import edu.temple.convoy3.utility.SharedPreferencesManager
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +35,11 @@ class MainActivity : ComponentActivity() {
             arrayOf(Manifest.permission.RECORD_AUDIO),
             0
         )
+        FirebaseMessaging.getInstance()
+            .token.addOnSuccessListener {
+                Log.d("Token", it.toString())
+                SharedPreferencesManager.saveFCMKey(this, it.toString())
+            }
         setContent {
             MyApp {
                 AllNavigation()

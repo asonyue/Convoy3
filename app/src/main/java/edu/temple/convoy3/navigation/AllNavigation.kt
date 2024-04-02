@@ -19,7 +19,7 @@ fun AllNavigation() {
             SignUpScreen(navController)
         }
         composable(AllScreen.MainScreen.name) {
-            MainScreen(navController)
+            MainScreen()
         }
     }
 }
