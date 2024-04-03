@@ -47,11 +47,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.Dialog
 import edu.temple.convoy3.components.ConvoyDialog
 import edu.temple.convoy3.components.RecordingDialog
+import edu.temple.convoy3.firebase.FCMViewModel
 
 
 @Composable
 
 fun MainScreen() {
+
+    val messageData by FCMViewModel().messageData
+
+    messageData?.let { data ->
+        Text(text = "Username: ${data.username}")
+        // Update other UI components as needed
+    }
 
     val context = LocalContext.current
 
